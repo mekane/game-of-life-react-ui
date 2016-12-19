@@ -1,11 +1,17 @@
-const size = 10;
-const state = [
-    [1, 0, 1],
-    [0, 1, 0],
-    [0, 1, 1]
-]; //TODO: get this from the Game of Life library
+const rootElement = document.getElementById('root');
+let states = [];
 
-ReactDOM.render(
-    <Board state={state}></Board>,
-    document.getElementById('root')
-);
+newGame(10);
+
+
+function render() {
+    const state = states[states.length-1];
+    console.log(`render `,state);
+    if (state)
+        ReactDOM.render(<Board state={state}></Board>, rootElement);
+}
+
+function newGame(boardSize) {
+    states = [game.newGame(boardSize)];
+    render();
+}
