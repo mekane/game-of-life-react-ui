@@ -17,6 +17,9 @@ function action(actionName, actionProperties) {
             states.push(game.tick(latestState()));
             render();
             break;
+        case 'RANDOM':
+            newRandomGame(1 * actionProperties.size);
+            break;
         case 'UNDO':
             states.pop();
             render();
@@ -49,5 +52,24 @@ function render() {
 
 function newGame(boardSize) {
     states = [game.newGame(boardSize)];
+    render();
+}
+
+function newRandomGame(boardSize) {
+    const newGame = game.newGame(boardSize);
+
+    const totalCells = boardSize * boardSize;
+    const thirtyPercent = Math.floor(totalCells * .3);
+    const upToThirtyPercentMore = Math.floor(Math.random() * (totalCells * .3));
+    let cellsToLight = thirtyPercent + upToThirtyPercentMore;
+    console.log('light up ' + cellsToLight);
+
+    for (let i = 0; i < cellsToLight; i++) {
+        let row = Math.floor(Math.random() * boardSize);
+        let col = Math.floor(Math.random() * boardSize);
+        newGame[row][col] = 1;
+        //console.log(`[${row}][${col}] lives`);
+    }
+    states = [newGame];
     render();
 }

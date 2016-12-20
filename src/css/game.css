@@ -22,3 +22,12 @@ body {
 .cell.live {
     background: black;
 }
+
+.controls {
+    margin-top: 12px;
+}
+
+.controls button {
+    margin-left: 4px;
+}
+
