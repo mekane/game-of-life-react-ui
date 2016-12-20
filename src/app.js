@@ -5,14 +5,15 @@ let states = [];
 newGame(10);
 
 function action(actionName, actionProperties) {
-    console.log('ACTION ' + actionName, actionProperties);
-    switch ( actionName ) {
+    switch (actionName) {
+        case 'CELL':
+            toggleCell(actionProperties.row, actionProperties.col);
+            render();
+            break;
         case 'NEW':
-            console.log('new game with size ' + actionProperties.size);
             newGame(1 * actionProperties.size);
             break;
         case 'NEXT':
-            console.log('compute next board state');
             states.push(game.tick(latestState()));
             render();
             break;
@@ -25,8 +26,18 @@ function action(actionName, actionProperties) {
     }
 }
 
+function toggleCell(row, column) {
+    const nextGameState = cloneArrayOfArrays(latestState());
+    nextGameState[row][column] = !nextGameState[row][column];
+    states.push(nextGameState);
+}
+
+function cloneArrayOfArrays(array) {
+    return array.map(subArray => subArray.slice());
+}
+
 function latestState() {
-    return states[states.length-1];
+    return states[states.length - 1];
 }
 
 function render() {
